@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>scam.link</title>
+
+<style>
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* VIDEO BACKGROUND */
+video {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* DARK OVERLAY */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
+}
+
+/* SCREENS */
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: cyan;
+    text-shadow: 0 0 10px cyan;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* BUTTONS */
+button {
+    padding: 15px 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#yes { background: lime; }
+#no { background: red; position: absolute; }
+
+/* PINK REASONS BUTTON */
+#reasonsBtn { 
+    background: #ff69b4; 
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+    transition: all 0.3s ease;
+}
+
+#reasonsBtn:hover {
+    background: #ff1493;
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 20, 147, 0.8);
+}
+
+/* REASONS BOX */
+#reasonsBox {
+    width: 80%;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 10px;
+    color: pink;
+    text-shadow: none;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* CURSOR BLINK ANIMATION */
+.cursor {
+    display: inline-block;
+    width: 3px;
+    background-color: pink;
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* HIDE AUDIO CONTROL */
+audio { display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- VIDEO -->
+<video src="hello.mp4" autoplay muted loop playsinline></video>
+
+<div class="overlay"></div>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+  <source src="jamie-miller-last-call-official-music-video_p5AuFuuY.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SCREEN 1 -->
+<div id="screen1" class="screen">
+    <h1>Do you wanna be my valentine?</h1>
+    <button id="yes">Yes</button>
+</div>
+
+<!-- RUNAWAY BUTTON -->
+<button id="no">No</button>
+
+<!-- SCREEN 2 -->
+<div id="screen2" class="screen hidden">
+    <h1>I knew you would say YES!!!</h1>
+    <button id="reasonsBtn">Reasons why i fell for you!!!! hehe </button>
+</div>
+
+<!-- SCREEN 3 -->
+<div id="screen3" class="screen hidden">
+    <h1>101 Reasons Why I Like You pookie </h1>
+    <div id="reasonsBox"></div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const reasonsBtn = document.getElementById("reasonsBtn");
+
+const screen1 = document.getElementById("screen1");
+const screen2 = document.getElementById("screen2");
+const screen3 = document.getElementById("screen3");
+
+const bgMusic = document.getElementById("bgMusic");
+const reasonsBox = document.getElementById("reasonsBox");
+
+/* NO BUTTON RUNS AWAY */
+document.addEventListener("mousemove", (e) => {
+
+    const rect = noBtn.getBoundingClientRect();
+    const dx = e.clientX - (rect.left + rect.width / 2);
+    const dy = e.clientY - (rect.top + rect.height / 2);
+    const distance = Math.sqrt(dx*dx + dy*dy);
+
+    if (distance < 150) {
+        noBtn.style.left =
+            Math.random() * (window.innerWidth - rect.width) + "px";
+        noBtn.style.top =
+            Math.random() * (window.innerHeight - rect.height) + "px";
+    }
+
+});
+
+/* YES BUTTON */
+yesBtn.addEventListener("click", () => {
+    bgMusic.play();
+    screen1.classList.add("hidden");
+    noBtn.style.display = "none";
+    screen2.classList.remove("hidden");
+});
+
+/* REASONS BUTTON */
+reasonsBtn.addEventListener("click", () => {
+    screen2.classList.add("hidden");
+    screen3.classList.remove("hidden");
+    startTypewriterAnimation();
+});
+
+/* 100 CUTE REASONS */
+let reasons = [
+"1. Your smile makes my day brighter",
+"2. You make everything feel better",
+"3. You're kind to everyone",
+"4. You're beautiful inside and out",
+"5. You make me laugh",
+"6. You listen to me",
+"7. You understand me",
+"8. You care deeply",
+"9. You're unique",
+"10. You're adorable",
+
+"11. You make my heart happy",
+"12. You inspire me",
+"13. You're supportive",
+"14. You're thoughtful",
+"15. You're amazing",
+"16. You're fun to talk to",
+"17. You're smart",
+"18. You're cute without trying",
+"19. You're honest",
+"20. You're special",
+
+"21. You make me feel safe",
+"22. You believe in me",
+"23. You're patient",
+"24. You're sweet",
+"25. You're my favorite person",
+"26. You make my bad days better",
+"27. You make good days even better",
+"28. You're charming",
+"29. You're lovable",
+"30. You're unforgettable",
+
+"31. You make me smile without trying",
+"32. You're my happy place",
+"33. You're comforting",
+"34. You're warm-hearted",
+"35. You're caring",
+"36. You're gentle",
+"37. You're precious",
+"38. You're beautiful when you laugh",
+"39. You're beautiful when you're serious",
+"40. You're beautiful always",
+
+"41. You're my favorite notification",
+"42. You make my heart race",
+"43. You make me blush",
+"44. You're thoughtful",
+"45. You're understanding",
+"46. You're cute when you're sleepy",
+"47. You're cute when you're happy",
+"48. You're cute when you're mad",
+"49. You're cute always",
+"50. You're perfect to me",
+
+"51. You make me feel lucky",
+"52. You make me feel special",
+"53. You make me feel wanted",
+"54. You're everything I didn't know I needed",
+"55. You make life brighter",
+"56. You're my sunshine",
+"57. You're my moon",
+"58. You're my best friend and soulmate hehe",
+"59. You're my favorite thought",
+"60. You're my favorite person",
+
+"61. You make me smile randomly",
+"62. You make me daydream",
+"63. You make my heart warm",
+"64. You make me hopeful",
+"65. You make me excited",
+"66. You're always on my mind",
+"67. You're irreplaceable",
+"68. You're magical",
+"69. You're wonderful",
+"70. You're everything",
+
+"71. You make me believe in love",
+"72. You make me believe in fate",
+"73. You're worth everything",
+"74. You're priceless",
+"75. You're stunning",
+"76. You're glowing",
+"77. You're breathtaking",
+"78. You're cute beyond words",
+"79. You're my dream",
+"80. You're my wish",
+
+"81. You make me want to be better",
+"82. You make me stronger",
+"83. You make me happier",
+"84. You make me softer",
+"85. You make me calmer",
+"86. You're my peace",
+"87. You're my comfort",
+"88. You're my joy",
+"89. You're my heart",
+"90. You're my everything",
+"91. You're unforgettable",
+"92. You're one of a kind",
+"93. You're precious to me",
+"94. You're special to me",
+"95. Your hair is so pretty",
+"96. Your amnesia",
+"97. The way you puff up your cheeks is so cute",
+"98. all cuz i keep smiling and laughing ",
+"99. You make evrything bearable ",
+"100. Because I like you more than words can explain ",
+"101. You're the best thing that ever happened to me and ur pookie hehe"
+];
+
+// Typewriter animation function
+function startTypewriterAnimation() {
+    reasonsBox.innerHTML = '';
+    let currentReasonIndex = 0;
+    let currentCharIndex = 0;
+    let currentText = '';
+    
+    // Create cursor element
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    cursor.innerHTML = '&nbsp;';
+    reasonsBox.appendChild(cursor);
+    
+    const typingSpeed = 8; // milliseconds per character - FASTER
+    const lineBreakDelay = 80; // delay between reasons - FASTER
+    
+    function typeNextChar() {
+        if (currentReasonIndex >= reasons.length) {
+            // Animation complete - remove cursor
+            cursor.remove();
+            return;
+        }
+        
+        const currentReason = reasons[currentReasonIndex];
+        
+        if (currentCharIndex < currentReason.length) {
+            // Still typing current reason
+            currentText += currentReason[currentCharIndex];
+            currentCharIndex++;
+            
+            // Update display
+            reasonsBox.innerHTML = currentText;
+            reasonsBox.appendChild(cursor);
+            
+            // Auto scroll to bottom
+            reasonsBox.scrollTop = reasonsBox.scrollHeight;
+            
+            setTimeout(typeNextChar, typingSpeed);
+        } else {
+            // Finished current reason, add line break
+            currentText += '<br><br>';
+            currentReasonIndex++;
+            currentCharIndex = 0;
+            
+            // Update display
+            reasonsBox.innerHTML = currentText;
+            reasonsBox.appendChild(cursor);
+            
+            // Auto scroll to bottom
+            reasonsBox.scrollTop = reasonsBox.scrollHeight;
+            
+            setTimeout(typeNextChar, lineBreakDelay);
+        }
+    }
+    
+    // Start the animation
+    typeNextChar();
+}
+
+</script>
+
+</body>
+</html>
